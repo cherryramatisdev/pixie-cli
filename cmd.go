@@ -1,7 +1,6 @@
 package pixie
 
 import (
-	"github.com/cherryramatisdev/pixie-cli/pkg/zet"
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
 	"github.com/rwxrob/keg"
@@ -22,7 +21,6 @@ var Cmd = &Z.Cmd{
 	Commands: []*Z.Cmd{
 		help.Cmd,
 		pomo.Cmd,
-		zet.Cmd,
 		keg.Cmd,
 	},
 }
