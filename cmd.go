@@ -1,6 +1,7 @@
 package pixie
 
 import (
+	"github.com/cherryramatisdev/pixie-cli/pkg/todo"
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
 	"github.com/rwxrob/keg"
@@ -22,5 +23,6 @@ var Cmd = &Z.Cmd{
 		help.Cmd,
 		pomo.Cmd,
 		keg.Cmd,
+		todo.Cmd,
 	},
 }
