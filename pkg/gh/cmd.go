@@ -23,16 +23,20 @@ var prCmd = &Z.Cmd{
 var prCreateCmd = &Z.Cmd{
 	Name:    "create",
 	Aliases: []string{`c`},
-	Call: func(x *Z.Cmd, _ ...string) error {
+	Call: func(x *Z.Cmd, args ...string) error {
 		var branch string
 		reviewers := os.Getenv("REVIEWERS")
 
-		err := Z.Exec("git", "show-ref", "--verify", "--quiet", "refs/heads/develop")
-
-		if err != nil {
-			branch = "main"
+		if args[0] == "main" || args[0] == "develop" {
+			branch = args[0]
 		} else {
-			branch = "develop"
+			err := Z.Exec("git", "show-ref", "--verify", "--quiet", "refs/heads/develop")
+
+			if err != nil {
+				branch = "main"
+			} else {
+				branch = "develop"
+			}
 		}
 
 		cmd := []string{"gh", "pr", "-a", "@me", "create", "-B", branch, "-r", reviewers, "--draft"}

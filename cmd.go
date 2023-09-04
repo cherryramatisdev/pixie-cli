@@ -2,6 +2,7 @@ package pixie
 
 import (
 	"github.com/cherryramatisdev/pixie-cli/pkg/gh"
+	"github.com/cherryramatisdev/pixie-cli/pkg/lami"
 	"github.com/cherryramatisdev/pixie-cli/pkg/tmux"
 	"github.com/cherryramatisdev/pixie-cli/pkg/todo"
 	Z "github.com/rwxrob/bonzai/z"
@@ -13,7 +14,8 @@ import (
 var Cmd = &Z.Cmd{
 	Name: "pixie",
 	Shortcuts: map[string][]string{
-		`1v1`: {`keg`, `1v1`},
+		`1v1`:   {`keg`, `1v1`},
+		`daily`: {`keg`, `daily`},
 	},
 	Summary:     "A general purpose command line tool",
 	Version:     "0.0.1",
@@ -28,5 +30,6 @@ var Cmd = &Z.Cmd{
 		todo.Cmd,
 		tmux.Cmd,
 		gh.Cmd,
+		lami.Cmd,
 	},
 }
