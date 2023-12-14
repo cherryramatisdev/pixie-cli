@@ -1,6 +1,7 @@
 package gh
 
 import (
+	"fmt"
 	"os"
 
 	Z "github.com/rwxrob/bonzai/z"
@@ -11,7 +12,7 @@ var Cmd = &Z.Cmd{
 	Name:     "github",
 	Aliases:  []string{`gh`},
 	Summary:  "A github branch to manipulate the gh cli with more complex actions",
-	Commands: []*Z.Cmd{prCmd, help.Cmd},
+	Commands: []*Z.Cmd{prCmd, profileCmd, help.Cmd},
 }
 
 var prCmd = &Z.Cmd{
@@ -27,7 +28,7 @@ var prCreateCmd = &Z.Cmd{
 		var branch string
 		reviewers := os.Getenv("REVIEWERS")
 
-		if args[0] == "main" || args[0] == "develop" {
+		if len(args[0]) > 0 {
 			branch = args[0]
 		} else {
 			err := Z.Exec("git", "show-ref", "--verify", "--quiet", "refs/heads/develop")
@@ -53,5 +54,40 @@ var prCreateCmd = &Z.Cmd{
 		}
 
 		return Z.Exec("gh", "pr", "view", "-w")
+	},
+}
+
+var profileCmd = &Z.Cmd{
+	Name:     "profile",
+	Aliases:  []string{`p`},
+	Commands: []*Z.Cmd{profileSwitchCmd, help.Cmd},
+}
+
+var profileSwitchCmd = &Z.Cmd{
+	Name:    "switch",
+	Aliases: []string{`s`},
+	Call: func(x *Z.Cmd, args ...string) error {
+		Z.Exec("gh", "auth", "switch")
+
+		home := os.Getenv("HOME")
+
+		// Open the file (create or truncate)
+		file, err := os.Create(fmt.Sprintf("%s/.local/share/gh_profile.txt", home))
+		if err != nil {
+			fmt.Println("Error creating/truncating file:", err)
+			return nil
+		}
+		defer file.Close()
+
+		content := Z.Out("gh", "auth", "status")
+
+		// Write the content to the file
+		_, err = file.WriteString(content)
+		if err != nil {
+			fmt.Println("Error writing to file:", err)
+			return nil
+		}
+
+		return nil
 	},
 }

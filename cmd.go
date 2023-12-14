@@ -4,7 +4,6 @@ import (
 	"github.com/cherryramatisdev/pixie-cli/pkg/gh"
 	"github.com/cherryramatisdev/pixie-cli/pkg/lami"
 	"github.com/cherryramatisdev/pixie-cli/pkg/tmux"
-	"github.com/cherryramatisdev/pixie-cli/pkg/todo"
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/help"
 	"github.com/rwxrob/keg"
@@ -16,6 +15,7 @@ var Cmd = &Z.Cmd{
 	Shortcuts: map[string][]string{
 		`1v1`:   {`keg`, `1v1`},
 		`daily`: {`keg`, `daily`},
+		`todo`:  {`keg`, `daily`},
 	},
 	Summary:     "A general purpose command line tool",
 	Version:     "0.0.1",
@@ -27,7 +27,6 @@ var Cmd = &Z.Cmd{
 		help.Cmd,
 		pomo.Cmd,
 		keg.Cmd,
-		todo.Cmd,
 		tmux.Cmd,
 		gh.Cmd,
 		lami.Cmd,

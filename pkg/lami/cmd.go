@@ -15,7 +15,7 @@ var Cmd = &Z.Cmd{
 var openCmd = &Z.Cmd{
 	Name:     "open",
 	Aliases:  []string{`o`},
-	Commands: []*Z.Cmd{openDiscussCmd, openSlackTemplatesCmd, help.Cmd},
+	Commands: []*Z.Cmd{openDiscussCmd, openSlackTemplatesCmd, openLamiEnvCmd, help.Cmd},
 }
 
 var openDiscussCmd = &Z.Cmd{
@@ -30,5 +30,13 @@ var openSlackTemplatesCmd = &Z.Cmd{
 	Aliases: []string{`st`},
 	Call: func(x *Z.Cmd, _ ...string) error {
 		return Z.Exec("open", "https://github.com/lami-health/discussions/discussions/25")
+	},
+}
+
+var openLamiEnvCmd = &Z.Cmd{
+	Name:    "lami_env",
+	Aliases: []string{`le`},
+	Call: func(x *Z.Cmd, _ ...string) error {
+		return Z.Exec("open", "https://docs.google.com/spreadsheets/d/1uDI6juIYXUjgTf9bC0c2pcuLIeEPYBCrecxxiCakgB4/edit#gid=0")
 	},
 }
